@@ -34,3 +34,6 @@
 [submodule "bundle/vim-indent-object"]
 	path = bundle/vim-indent-object
 	url = https://github.com/michaeljsmith/vim-indent-object
+[submodule "bundle/vim-csharp"]
+	path = bundle/vim-csharp
+	url = https://github.com/OrangeT/vim-csharp.git

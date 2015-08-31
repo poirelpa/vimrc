@@ -1,1 +1,1 @@
-ln -b -s ~/.vim/.vimrc ~/.vimrc
+copy "%HOMEPATH%\.vim\_vimrc" "%HOMEPATH%\_vimrc"
