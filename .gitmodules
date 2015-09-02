@@ -58,3 +58,11 @@
 	path = bundle/dbext.vim
 	url = https://github.com/vim-scripts/dbext.vim.git
     ignore = dirty
+[submodule "bundle/omnisharp-vim"]
+	path = bundle/omnisharp-vim
+	url = https://github.com/OmniSharp/omnisharp-vim.git
+    ignore = dirty
+[submodule "bundle/vim-dispatch"]
+	path = bundle/vim-dispatch
+	url = https://github.com/tpope/vim-dispatch.git
+    ignore = dirty
