@@ -30,10 +30,6 @@
 	path = bundle/vim-airline
 	url = https://github.com/bling/vim-airline.git
     ignore = dirty
-[submodule "bundle/vim-commentary"]
-	path = bundle/vim-commentary
-	url = https://github.com/tpope/vim-commentary.git
-    ignore = dirty
 [submodule "bundle/vim-expand-region"]
 	path = bundle/vim-expand-region
 	url = https://github.com/terryma/vim-expand-region
@@ -66,3 +62,6 @@
 	path = bundle/vim-dispatch
 	url = https://github.com/tpope/vim-dispatch.git
     ignore = dirty
+[submodule "bundle/nerdcommenter"]
+	path = bundle/nerdcommenter
+	url = https://github.com/scrooloose/nerdcommenter.git
