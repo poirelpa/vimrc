@@ -147,7 +147,7 @@ def dte_task_list (vs_pid, fn_quickfix):
     if not dte: return
     task_list = None
     for window in dte.Windows:
-        if str(window.Caption).startswith('Task List'):
+        if window.Caption.encode('utf-8').startswith('Liste des t'):
             task_list = window
     if not task_list:
         _vim_msg ('Error: Task List window not active')
@@ -161,7 +161,8 @@ def dte_task_list (vs_pid, fn_quickfix):
         except: line = '<no-line>'
         try: description = TLItem.Description
         except: description = '<no-description>'
-        print >>fp_task_list, '%s(%s) : %s' % (filename, line, description)
+        if TLItem.Category != 'BuildCompile' :
+            print >>fp_task_list, u'%s(%s) : %s' % (filename.encode('ascii','replace'), line, description.encode('ascii','replace'))
     fp_task_list.close ()
     _vim_command ('call <Sid>DTEQuickfixOpen ("Task List")')
     _vim_status ('VS Task list')
@@ -175,17 +176,20 @@ def dte_output (vs_pid, fn_output, window_caption, notify=None):
         return
     dte = _get_dte(vs_pid)
     if not dte: return
+    if window_caption == 'Output' : window_caption = 'Sortie'
+    if window_caption == 'Find Results 1' : window_caption = 'recherche 1'
+    if window_caption == 'Find Results 2' : window_caption = 'recherche 2'
     window = _dte_get_window(dte, window_caption)
     if not window:
         _vim_msg ('Error: window not active (%s)' % window_caption)
         return
-    if window_caption == 'Output':
-        owp = window.Object.OutputWindowPanes.Item ('Build')
+    if window_caption == 'Sortie':
+        owp = window.Object.OutputWindowPanes.Item (1)
         sel = owp.TextDocument.Selection
     else:
         sel = window.Selection
     sel.SelectAll()
-    lst_text = str(sel.Text).splitlines()
+    lst_text = sel.Text.encode('ascii','replace').splitlines()
     lst_text = _fix_filenames (os.path.dirname(dte.Solution.FullName), lst_text)
     sel.Collapse()
     fp_output = file (fn_output, 'w')
@@ -290,7 +294,7 @@ def _dte_project_tree (project):
     name = _com_property (project, 'Name')
     if not name:
         return []
-    name = str(name)
+    name = name.encode('utf-8')
     properties = _com_property(project, 'Properties')
     if properties: 
         try: full_path = str(properties['FullPath'])
@@ -448,6 +452,8 @@ def _dte_output_activate (vs_pid):
 #----------------------------------------------------------------------
 
 def _dte_get_window(dte, caption):
+    for w in dte.Windows :
+        if w.Caption.encode('ascii','replace').endswith(caption) : return w
     try: return dte.Windows[caption]
     except pywintypes.com_error: return None
 
